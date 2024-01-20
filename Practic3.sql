@@ -37,24 +37,40 @@ GROUP BY sender_id
 ORDER BY count_messages desc
 limit 2;
 
-
 ---ex6----
+SELECT tweet_id
+FROM Tweets
+WHERE LENGTH(content) > 15;
 
 
----ex7----
+---ex7----error
+SELECT active_day as day,
+    COUNT(DISTINCT user_id) as active_users
+FROM Activity
+WHERE EXTRACT(DAY FROM activity_date) = 30
+AND EXTRACT(MONTH FROM activity_date) = 7
+group by user_id
 
 
 ---ex8----
+SELECT COUNT(employee_id) AS number_employees_hired
+FROM employees
+WHERE EXTRACT(MONTH FROM joining_date) IN (1, 7) 
+  AND EXTRACT(YEAR FROM joining_date) = 2022;
+
 
 
 ---ex9----
+SELECT POSITION('a' IN 'Amitah') AS position_of_a
+from worker;
+
 
 
 ---ex10----
+select substring(title, length(winery)+2,4)
+from title
+where country='Macadonia'
 
 
----ex11----
 
-
----ex12---
 
