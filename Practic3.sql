@@ -43,27 +43,26 @@ FROM Tweets
 WHERE LENGTH(content) > 15;
 
 
----ex7----error
-SELECT active_day as day,
-    COUNT(DISTINCT user_id) as active_users
+---ex7---
+SELECT activity_date as day,
+       COUNT(DISTINCT user_id) as active_users
 FROM Activity
-WHERE EXTRACT(DAY FROM activity_date) = 30
-AND EXTRACT(MONTH FROM activity_date) = 7
-group by user_id
+WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+GROUP BY activity_date;
+
 
 
 ---ex8----
-SELECT COUNT(employee_id) AS number_employees_hired
+SELECT 
+count(employee_id) as number_employees hired
 FROM employees
-WHERE EXTRACT(MONTH FROM joining_date) IN (1, 7) 
-  AND EXTRACT(YEAR FROM joining_date) = 2022;
-
+WHERE EXTRACT(MONTH FROM joining_date) between 1 and 7
+AND EXTRACT(YEAR FROM joining_date) = 2022
 
 
 ---ex9----
 SELECT POSITION('a' IN 'Amitah') AS position_of_a
 from worker;
-
 
 
 ---ex10----
