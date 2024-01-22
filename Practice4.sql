@@ -1,4 +1,4 @@
----ex1----DataLemur
+---ex1----DataLemur---https://datalemur.com/questions/laptop-mobile-viewership
 SELECT 
  sum(CASE 
    WHEN device_type = 'laptop' THEN 1
@@ -10,15 +10,25 @@ SELECT
   END) AS mobile_views 
 FROM viewership;
 
+---ex2---https://leetcode.com/problems/triangle-judgement
+SELECT x, y, z,
+  CASE
+    WHEN x + y > z AND x + z > y AND y + z > x THEN 'YES'
+    ELSE 'NO'
+  END AS triangle
+FROM Triangle;
+
+---ex3---datalemur-uncategorized-calls-percentage
+select round(1.0*sum(
+case when call_category is null or call_category = 'n/a' then 1 
+else 0 end)/count(*)*100,0) 
+as call_percentage
+from callers;  
 
 
----ex2---
-
----ex3----
-
-
----ex4--
-
+---ex4--https://leetcode.com/problems/find-customer-referee/
+select name from customer
+where referee_id != 2 or referee_id is null
 
 ---ex5----
 
