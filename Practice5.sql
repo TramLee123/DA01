@@ -1,0 +1,29 @@
+---ex1---
+SELECT COUNTRY.CONTINENT,ROUND(AVG(CITY.POPULATION),0)
+FROM CITY
+INNER JOIN COUNTRY ON CITY.CountryCode = COUNTRY.Code
+WHERE CITY.ID IS NOT NULL
+GROUP BY COUNTRY.CONTINENT
+
+---ex2---
+
+
+---ex3---
+
+
+---ex4---
+
+
+---ex5---
+
+
+
+
+---ex6---
+
+
+
+
+
+
+
