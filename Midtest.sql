@@ -20,4 +20,19 @@ GROUP BY
   replacement_cost, cost_range;
 
 Q3.
+  SELECT
+    f.title AS longest_film_title,
+    f.length AS longest_film_length,
+    c.category_name AS category_of_longest_film
+FROM
+    films AS f
+JOIN
+    categories AS c ON f.category_id = c.category_id
+WHERE
+    c.category_name IN ('Drama', 'Sports')
+ORDER BY
+    f.length DESC
+LIMIT 1;
+
+Q4.
 
