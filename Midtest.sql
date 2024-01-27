@@ -81,4 +81,132 @@ ORDER BY
   film_count DESC
 LIMIT 1;
 
+Q5.---
+  SELECT 
+  actor.actor_id,
+  actor.first_name,
+  actor.last_name,
+  COUNT(film_actor.film_id) AS number_of_films
+FROM 
+  actor
+INNER JOIN 
+  film_actor ON actor.actor_id = film_actor.actor_id
+GROUP BY 
+  actor.actor_id, actor.first_name, actor.last_name
+ORDER BY 
+  number_of_films DESC;
+---Diễn viên nào đóng nhiều phim nhất?
+SELECT 
+  actor.actor_id,
+  actor.first_name,
+  actor.last_name,
+  COUNT(film_actor.film_id) AS film_count
+FROM 
+  actor
+JOIN 
+  film_actor ON actor.actor_id = film_actor.actor_id
+GROUP BY 
+  actor.actor_id, actor.first_name, actor.last_name
+ORDER BY 
+  film_count DESC
+LIMIT 1;
+
+
+Q6; Task: Tìm các địa chỉ không liên quan đến bất kỳ khách hàng nào.
+  SELECT 
+  address.address_id,
+  address.address,
+  address.district,
+  address.city_id
+FROM 
+  address
+LEFT JOIN 
+  customer ON address.address_id = customer.address_id
+WHERE 
+  customer.address_id IS NULL;
+
+----Có bao nhiêu địa chỉ như vậy?
+SELECT 
+  COUNT(address.address_id) AS number_of_addresses_without_customers
+FROM 
+  address
+LEFT JOIN 
+  customer ON address.address_id = customer.address_id
+WHERE 
+  customer.address_id IS NULL;
+
+Q.7:Danh sách các thành phố và doanh thu tương ừng trên từng thành phố 
+SELECT
+  city.city_id,
+  city.city,
+  SUM(payment.amount) AS total_revenue
+FROM
+  city
+JOIN
+  address ON city.city_id = address.city_id
+JOIN
+  customer ON address.address_id = customer.address_id
+JOIN
+  payment ON customer.customer_id = payment.customer_id
+GROUP BY
+  city.city_id, city.city
+ORDER BY
+  total_revenue DESC;
+----Thành phố nào đạt doanh thu cao nhất?
+SELECT
+  city.city_id,
+  city.city,
+  SUM(payment.amount) AS total_revenue
+FROM
+  city
+JOIN
+  address ON city.city_id = address.city_id
+JOIN
+  customer ON address.address_id = customer.address_id
+JOIN
+  payment ON customer.customer_id = payment.customer_id
+GROUP BY
+  city.city_id, city.city
+ORDER BY
+  total_revenue DESC
+LIMIT 1;
+
+Q.8...
+  SELECT
+  CONCAT(city.city, ', ', country.country) AS city_country,
+  SUM(payment.amount) AS total_revenue
+FROM
+  city
+JOIN
+  address ON city.city_id = address.city_id
+JOIN
+  country ON city.country_id = country.country_id
+JOIN
+  customer ON address.address_id = customer.address_id
+JOIN
+  payment ON customer.customer_id = payment.customer_id
+GROUP BY
+  city.city_id, city.city, country.country
+ORDER BY
+  total_revenue DESC;
+---------: thành phố của đất nước nào đat doanh thu cao nhất
+SELECT
+  country.country AS highest_revenue_country,
+  SUM(payment.amount) AS total_revenue
+FROM
+  city
+JOIN
+  address ON city.city_id = address.city_id
+JOIN
+  country ON city.country_id = country.country_id
+JOIN
+  customer ON address.address_id = customer.address_id
+JOIN
+  payment ON customer.customer_id = payment.customer_id
+GROUP BY
+  country.country
+ORDER BY
+  total_revenue DESC
+LIMIT 1;
+
 
