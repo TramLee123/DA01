@@ -20,19 +20,65 @@ GROUP BY
   replacement_cost, cost_range;
 
 Q3.
-  SELECT
-    f.title AS longest_film_title,
-    f.length AS longest_film_length,
-    c.category_name AS category_of_longest_film
-FROM
-    films AS f
-JOIN
-    categories AS c ON f.category_id = c.category_id
-WHERE
-    c.category_name IN ('Drama', 'Sports')
-ORDER BY
-    f.length DESC
+  SELECT 
+  film.title,
+  film.length,
+  category.name AS category_name
+FROM 
+  film
+JOIN 
+  film_category ON film.film_id = film_category.film_id
+JOIN 
+  category ON film_category.category_id = category.category_id
+WHERE 
+  category.name IN ('Drama', 'Sports')
+ORDER BY 
+  film.length DESC;
+
+------Phim dài nhất thuộc thể loại nào và dài bao nhiêu?
+SELECT 
+  category.name AS longest_movie_category,
+  MAX(film.length) AS longest_movie_length
+FROM 
+  film
+JOIN 
+  film_category ON film.film_id = film_category.film_id
+JOIN 
+  category ON film_category.category_id = category.category_id
+WHERE 
+  category.name IN ('Drama', 'Sports')
+GROUP BY 
+  category.name;
+
+
+
+Q4. SELECT 
+  category.name AS category_name,
+  COUNT(film.title) AS number_of_films
+FROM 
+  category
+INNER JOIN 
+  film_category ON category.category_id = film_category.category_id
+INNER JOIN 
+  film ON film_category.film_id = film.film_id
+GROUP BY 
+  category.name
+ORDER BY 
+  number_of_films DESC;
+-----Thể loại danh mục nào là phổ biến nhất trong số các bộ phim?
+SELECT 
+  category.name AS most_popular_category,
+  COUNT(film.film_id) AS film_count
+FROM 
+  category
+JOIN 
+  film_category ON category.category_id = film_category.category_id
+JOIN 
+  film ON film_category.film_id = film.film_id
+GROUP BY 
+  category.name
+ORDER BY 
+  film_count DESC
 LIMIT 1;
 
-Q4.
 
