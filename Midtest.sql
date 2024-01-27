@@ -192,7 +192,7 @@ ORDER BY
 ---------: thành phố của đất nước nào đat doanh thu cao nhất
 SELECT
   country.country AS highest_revenue_country,
-  SUM(payment.amount) AS total_revenue
+  MAX(payment.amount) AS total_revenue
 FROM
   city
 JOIN
@@ -208,5 +208,4 @@ GROUP BY
 ORDER BY
   total_revenue DESC
 LIMIT 1;
-
 
