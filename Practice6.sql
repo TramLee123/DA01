@@ -105,8 +105,15 @@ select employee_id from Employees
 where salary < 30000 and manager_id not in (select employee_id from employees) 
 order by employee_id desc
 
----ex10---
-
+---ex10---Primary Department for Each Employee.
+select employee_id, department_id
+from employee
+group by employee_id
+having count(employee_id)=1
+union
+select employee_id, department_id
+from employee 
+where primary_flag = 'Y'
 
 
 ---ex11---https://leetcode.com/problems/movie-rating/
