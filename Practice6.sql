@@ -84,8 +84,8 @@ SUM(temp.amount) AS trans_total_amount,
 SUM(CASE WHEN temp.state = "approved" THEN amount ELSE 0 END ) as approved_total_amount
 FROM temp
 GROUP BY temp.month, temp.country
----ex7---
-https://leetcode.com/problems/product-sales-analysis
+  
+---ex7---https://leetcode.com/problems/product-sales-analysis
 SELECT product_id, year as first_year, quantity,price
 FROM Sales
 WHERE (product_id,year) in (
@@ -94,20 +94,57 @@ FROM Sales
 GROUP BY product_id
 )
 
----ex8---
+---ex8---https://leetcode.com/problems/customers-who-bought-all-products
+select customer_id from customer 
+group by 
+customer_id
+having count(distinct product_key ) = (select count(product_key ) from product)
 
-
-
----ex9---
-
+---ex9---https://leetcode.com/problems/employees-whose-manager-left-the-company
+select employee_id from Employees
+where salary < 30000 and manager_id not in (select employee_id from employees) 
+order by employee_id desc
 
 ---ex10---
 
 
 
----ex11---
+---ex11---https://leetcode.com/problems/movie-rating/
+(
+  select name as results 
+  from movierating mr inner join users u 
+  on mr.user_id=u.user_id
+  group by u.user_id 
+  order by count(*) desc, name asc 
+  limit 1
+)
+union all
+(
+  select results from
+  (
+  select title as results, avg(rating) as average_rating 
+  from movierating mr 
+  inner join movies m 
+  on mr.movie_id=m.movie_id 
+  where month(created_at) = 2 
+  group by m.movie_id
+  ) rating_group
+  order by average_rating desc, results asc limit 1
+);
 
 
----ex12---
 
+---ex12---https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends
+WITH CTE AS(
+SELECT requester_id , accepter_id
+FROM RequestAccepted
+UNION ALL
+SELECT accepter_id , requester_id
+FROM RequestAccepted
+)
+SELECT requester_id id, count(accepter_id) num
+FROM CTE
+group by 1
+ORDER BY 2 DESC
+LIMIT 1
 
