@@ -56,22 +56,54 @@ WHERE NOT EXISTS (
   FROM page_likes AS likes
   WHERE likes.page_id = pages.page_id)
 
----ex5---
+---ex5---https://leetcode.com/problems/monthly-transactions
+WITH temp AS
+(SELECT * ,
+DATE_FORMAT(trans_date,"%Y-%m") AS month
+FROM Transactions)
 
+SELECT temp.month, temp.country,
+COUNT(*) AS trans_count,
+SUM(CASE WHEN temp.state = "approved" THEN 1 ELSE 0 END) AS approved_count,
+SUM(temp.amount) AS trans_total_amount,
+SUM(CASE WHEN temp.state = "approved" THEN amount ELSE 0 END ) as approved_total_amount
+FROM temp
+GROUP BY temp.month, temp.country
 
----ex6---
+---ex6---https://leetcode.com/problems/monthly-transactions-i
 
+WITH temp AS
+(SELECT * ,
+DATE_FORMAT(trans_date,"%Y-%m") AS month
+FROM Transactions)
 
+SELECT temp.month, temp.country,
+COUNT(*) AS trans_count,
+SUM(CASE WHEN temp.state = "approved" THEN 1 ELSE 0 END) AS approved_count,
+SUM(temp.amount) AS trans_total_amount,
+SUM(CASE WHEN temp.state = "approved" THEN amount ELSE 0 END ) as approved_total_amount
+FROM temp
+GROUP BY temp.month, temp.country
 ---ex7---
-
+https://leetcode.com/problems/product-sales-analysis
+SELECT product_id, year as first_year, quantity,price
+FROM Sales
+WHERE (product_id,year) in (
+SELECT product_id,MIN(year)
+FROM Sales
+GROUP BY product_id
+)
 
 ---ex8---
+
 
 
 ---ex9---
 
 
 ---ex10---
+
+
 
 ---ex11---
 
